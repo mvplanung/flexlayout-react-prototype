@@ -1,4 +1,4 @@
-import FlexLayout from "flexlayout-react";
+import * as FlexLayout from "flexlayout-react";
 import { createModel } from "./flexLayoutFactory";
 import FlexLayout1 from "./flexLayout1";
 import FlexLayout2 from "./flexLayout2";
