@@ -16,8 +16,8 @@ const rootModel = {
         children: [
           {
             type: "tab",
-            name: "FX",
-            component: "button"
+            name: "Root FlexLayout",
+            component: "panel"
           }
         ]
       }
@@ -37,7 +37,7 @@ const factory = (node) => {
 
 export default function RootFlexLayout() {
   return (
-    <div className="flexLayout2">
+    <div className="rootFlexLayout">
       {/* test2 */}
       <FlexLayout.Layout model={createModel(rootModel)} factory={factory} />
     </div>

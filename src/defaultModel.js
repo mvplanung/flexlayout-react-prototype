@@ -12,7 +12,7 @@ export const modelJson = {
           {
             type: "tab",
             name: "FX",
-            component: "button"
+            component: "panel"
           }
         ]
       },
@@ -24,7 +24,7 @@ export const modelJson = {
           {
             type: "tab",
             name: "FI",
-            component: "button"
+            component: "panel"
           }
         ]
       }
