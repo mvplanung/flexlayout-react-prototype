@@ -1,5 +1,45 @@
 import * as FlexLayout from "flexlayout-react";
-import { modelJson } from "./defaultModel";
+import { rootModel } from "./constants/defaultModel";
 
-export const createModel = (model) =>
-  FlexLayout.Model.fromJson(model || modelJson);
+const getModel = (panelSetName) => {
+  if (!panelSetName) return;
+
+  return {
+    global: {},
+    layout: {
+      type: "row",
+      weight: 100,
+      children: [
+        {
+          type: "tabset",
+          weight: 50,
+          selected: 0,
+          children: [
+            {
+              type: "tab",
+              name: `${panelSetName} Panel 1`,
+              component: "panel",
+              config: { panelSetName }
+            }
+          ]
+        },
+        {
+          type: "tabset",
+          weight: 50,
+          selected: 0,
+          children: [
+            {
+              type: "tab",
+              name: `${panelSetName} Panel 2`,
+              component: "panel",
+              config: { panelSetName }
+            }
+          ]
+        }
+      ]
+    }
+  };
+};
+
+export const createModel = (panelSetName) =>
+  FlexLayout.Model.fromJson(getModel(panelSetName) || rootModel);

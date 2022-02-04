@@ -1,4 +1,4 @@
-export const modelJson = {
+export const rootModel = {
   global: {},
   layout: {
     type: "row",
@@ -11,19 +11,12 @@ export const modelJson = {
         children: [
           {
             type: "tab",
-            name: "FX",
+            name: "PanelSet1",
             component: "panel"
-          }
-        ]
-      },
-      {
-        type: "tabset",
-        weight: 50,
-        selected: 0,
-        children: [
+          },
           {
             type: "tab",
-            name: "FI",
+            name: "PanelSet2",
             component: "panel"
           }
         ]
