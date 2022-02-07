@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useExternalDrop } from "../hooks/useExternalDrop";
 import DragBox from "./DragBox";
 import DropBox from "./DropBox";
@@ -7,7 +6,7 @@ import styles from "./panel.module.css";
 const { container } = styles;
 
 const Panel = ({ layoutRef, node }) => {
-  const panelSetId = node.getName();
+  const { panelSetId } = node.getConfig();
   const { backgroundColor, dropRef } = useExternalDrop(layoutRef, panelSetId);
 
   return (

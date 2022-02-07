@@ -12,12 +12,14 @@ export const rootModel = {
           {
             type: "tab",
             name: "PanelSet1",
-            component: "panelSet"
+            component: "panelSet",
+            config: { panelSetId: "panelSet1" }
           },
           {
             type: "tab",
             name: "PanelSet2",
-            component: "panelSet"
+            component: "panelSet",
+            config: { panelSetId: "panelSet2" }
           }
           // {
           //   type: "tab",
