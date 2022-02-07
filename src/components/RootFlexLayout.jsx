@@ -1,24 +1,32 @@
 import * as FlexLayout from "flexlayout-react";
 import { createModel } from "../flexLayoutFactory";
-import NestedFlexLayout from "./NestedFlexLayout";
+import PanelSet from "./PanelSet";
 
 const factory = (node) => {
-  console.log("node", node);
+  // console.log("node", node);
   const name = node.getName();
-  return <NestedFlexLayout panelSetName={name} />;
+  return <PanelSet panelSetName={name} />;
 };
 const handleExternalDrag = (e) => {
-  console.log("Root -> onExternaldrag ", e.dataTransfer.types);
+  // console.log("PanelSet -> onExternaldrag  -> panelSetName", panelSetName);
+  return {
+    dragText: "Drag To New Tab",
+    json: {
+      type: "tab",
+      component: "multitype"
+    },
+    onDrop: (node, event) => {
+      if (!node || !event) return; // aborted drag
+    }
+  };
 };
 
 export default function RootFlexLayout() {
   return (
-    <div className="rootFlexLayout">
-      <FlexLayout.Layout
-        model={createModel()}
-        factory={factory}
-        onExternalDrag={handleExternalDrag}
-      />
-    </div>
+    <FlexLayout.Layout
+      model={createModel()}
+      factory={factory}
+      onExternalDrag={handleExternalDrag}
+    />
   );
 }

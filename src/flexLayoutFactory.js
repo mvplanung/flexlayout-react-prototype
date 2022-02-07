@@ -22,20 +22,20 @@ const getModel = (panelSetName) => {
               config: { panelSetName }
             }
           ]
-        },
-        {
-          type: "tabset",
-          weight: 50,
-          selected: 0,
-          children: [
-            {
-              type: "tab",
-              name: `${panelSetName} Panel 2`,
-              component: "panel",
-              config: { panelSetName }
-            }
-          ]
         }
+        // {
+        //   type: "tabset",
+        //   weight: 50,
+        //   selected: 0,
+        //   children: [
+        //     {
+        //       type: "tab",
+        //       name: `${panelSetName} Panel 2`,
+        //       component: "panel",
+        //       config: { panelSetName }
+        //     }
+        //   ]
+        // }
       ]
     }
   };

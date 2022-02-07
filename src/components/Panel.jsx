@@ -1,13 +1,14 @@
 import DragBox from "./DragBox";
+import DropBox from "./DropBox";
 import styles from "./panel.module.css";
 
-const { container, dropZone } = styles;
+const { container } = styles;
 
 const Panel = ({ node }) => {
   return (
     <div className={container}>
-      <DragBox name="drag" />
-      <div className={dropZone}>Drop Zone </div>
+      <DragBox name="drag">Drag</DragBox>
+      <DropBox />
       {/* <h4>{node.getName()}</h4> */}
     </div>
   );

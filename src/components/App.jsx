@@ -8,7 +8,16 @@ export default function App() {
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="App">
-        <RootFlexLayout />
+        <div
+          style={{
+            border: "1px solid red",
+            position: "relative",
+            width: "100%",
+            height: "100%"
+          }}
+        >
+          <RootFlexLayout />
+        </div>
       </div>
     </DndProvider>
   );
