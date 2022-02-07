@@ -2,16 +2,12 @@ import { useEffect } from "react";
 import { useDrop } from "react-dnd";
 import { ItemTypes } from "../constants/dndItemTypes";
 import { useCanDrag } from "../contexts/canDrag";
-import styles from "./dropBox.module.css";
 
-const { container } = styles;
-
-const DropBox = ({ layoutRef, panelSetId }) => {
+export const useExternalDrop = (layoutRef, panelSetId) => {
   const { setCanDrag } = useCanDrag();
-
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+  const [{ canDrop, isOver }, dropRef] = useDrop(() => ({
     accept: ItemTypes.BOX,
-    drop: () => ({ name: "Dustbin" }),
+    drop: () => ({ name: "Dustbin1" }),
     canDrop: (item) => panelSetId !== item.panelSetId,
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -19,9 +15,16 @@ const DropBox = ({ layoutRef, panelSetId }) => {
     })
   }));
   const isActive = canDrop && isOver;
+  let backgroundColor = "white";
+  if (isActive) {
+    backgroundColor = "darkgreen";
+  } else if (canDrop) {
+    backgroundColor = "darkkhaki";
+  }
 
   useEffect(() => {
     if (!isActive || !layoutRef.current.addTabWithDragAndDrop) return;
+    setCanDrag(false);
     layoutRef.current.addTabWithDragAndDrop(
       "Ziehen Sie an die gewünschte Position.",
       {
@@ -32,20 +35,13 @@ const DropBox = ({ layoutRef, panelSetId }) => {
       },
       () => setCanDrag(true)
     );
-    setCanDrag(false);
   }, [isActive, layoutRef, setCanDrag]);
 
-  let backgroundColor = "#222";
-  if (isActive) {
-    backgroundColor = "darkgreen";
-  } else if (canDrop) {
-    backgroundColor = "darkkhaki";
-  }
-  return (
-    <div ref={drop} className={container} style={{ backgroundColor }}>
-      {isActive ? "Release to drop" : "Drag a box here"}
-    </div>
-  );
+  return {
+    backgroundColor,
+    canDrop,
+    dropRef,
+    isActive,
+    isOver
+  };
 };
-
-export default DropBox;

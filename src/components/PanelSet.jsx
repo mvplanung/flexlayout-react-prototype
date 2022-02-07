@@ -1,59 +1,34 @@
 import * as FlexLayout from "flexlayout-react";
-import { createModel } from "../flexLayoutFactory";
-import CustomTabHeader from "./CustomTabHeader";
+import { useCallback, useMemo, useRef } from "react";
+import { createModel } from "../utils/flexLayoutFactory";
+import { onRenderTab } from "../utils/renderTab";
 import Panel from "./Panel";
 
-const factory = (node) => {
-  var component = node.getComponent();
-  if (component === "panel") {
-    return <Panel node={node} />;
-  }
-};
-// const handleTabDrag = (dragging, over, x, y, location, refresh) => {
-//   console.log("1handleTabDrag -> dragging", dragging);
-//   console.log("1handleTabDrag -> over", over);
-//   console.log("1handleTabDrag -> x", x);
-//   console.log("1handleTabDrag -> y", y);
-//   console.log("1handleTabDrag -> location", location);
-//   console.log("1handleTabDrag -> refresh", refresh);
-// };
+const styles = "./panelSet.module.css";
 
-const onRenderTab = (tabNode, renderValues) => {
-  // renderValues.buttons.push(
-  //   <div
-  //     onMouseDown={handleMouseDown}
-  //     style={{ backgroundColor: "blue", width: 20, height: 20 }}
-  //   >
-  //     ha
-  //   </div>
-  // );
-  renderValues.buttons.push(<CustomTabHeader name={renderValues.content} />);
-  // renderValues.content = ;
-};
+const { container } = styles;
+
 export default function PanelSet({ panelSetName }) {
-  const handleExternalDrag = (e) => {
-    // console.log("PanelSet -> onExternaldrag  -> panelSetName", panelSetName);
-    return {
-      dragText: "Drag To New Tab",
-      json: {
-        type: "tab",
-        name: `Moved Panel 1`,
-        component: "panel",
-        config: { panelSetName: "Moved" }
-      },
-      onDrop: (node, event) => {
-        if (!node || !event) return; // aborted drag
-      }
-    };
-  };
+  const layoutRef = useRef();
+
+  const factory = useCallback((node) => {
+    var component = node.getComponent();
+    if (component === "panel") {
+      return <Panel layoutRef={layoutRef} node={node} />;
+    }
+  }, []);
+  const model = useMemo(() => createModel(panelSetName), [panelSetName]);
+
   return (
-    <div className="flexLayout1">
+    <div
+      //  ref={dropRef}
+      className={container}
+    >
       <FlexLayout.Layout
-        model={createModel(panelSetName)}
         factory={factory}
-        // onTabDrag={handleTabDrag}
+        model={model}
         onRenderTab={onRenderTab}
-        onExternalDrag={handleExternalDrag}
+        ref={layoutRef}
       />
     </div>
   );

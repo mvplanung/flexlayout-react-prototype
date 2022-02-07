@@ -1,5 +1,5 @@
 import * as FlexLayout from "flexlayout-react";
-import { rootModel } from "./constants/defaultModel";
+import { rootModel } from "../constants/defaultModel";
 
 const getModel = (panelSetName) => {
   if (!panelSetName) return;

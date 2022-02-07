@@ -1,32 +1,34 @@
 import * as FlexLayout from "flexlayout-react";
-import { createModel } from "../flexLayoutFactory";
+import { useCallback, useMemo, useRef } from "react";
+import { CanDragProvider } from "../contexts/canDrag";
+import { createModel } from "../utils/flexLayoutFactory";
+import { onRenderTab } from "../utils/renderTab";
+import Panel from "./Panel";
 import PanelSet from "./PanelSet";
 
-const factory = (node) => {
-  // console.log("node", node);
-  const name = node.getName();
-  return <PanelSet panelSetName={name} />;
-};
-const handleExternalDrag = (e) => {
-  // console.log("PanelSet -> onExternaldrag  -> panelSetName", panelSetName);
-  return {
-    dragText: "Drag To New Tab",
-    json: {
-      type: "tab",
-      component: "multitype"
-    },
-    onDrop: (node, event) => {
-      if (!node || !event) return; // aborted drag
-    }
-  };
-};
-
 export default function RootFlexLayout() {
+  const layoutRef = useRef();
+  const factory = useCallback((node) => {
+    const name = node.getName();
+    const component = node.getComponent();
+
+    return component === "panelSet" ? (
+      <PanelSet panelSetName={name} />
+    ) : (
+      <Panel layoutRef={layoutRef} node={node} />
+    );
+  }, []);
+
+  const model = useMemo(() => createModel(), []);
+
   return (
-    <FlexLayout.Layout
-      model={createModel()}
-      factory={factory}
-      onExternalDrag={handleExternalDrag}
-    />
+    <CanDragProvider>
+      <FlexLayout.Layout
+        factory={factory}
+        model={model}
+        onRenderTab={onRenderTab}
+        ref={layoutRef}
+      />
+    </CanDragProvider>
   );
 }

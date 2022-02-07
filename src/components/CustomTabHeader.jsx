@@ -1,9 +1,9 @@
 import DragBox from "./DragBox";
 import { FaExternalLinkAlt } from "@react-icons/all-files/fa/FaExternalLinkAlt";
 
-const CustomTabHeader = ({ name }) => {
+const CustomTabHeader = ({ panelSetId }) => {
   return (
-    <DragBox name="d" area={20}>
+    <DragBox panelSetId={panelSetId} area={20}>
       <FaExternalLinkAlt />
     </DragBox>
   );
